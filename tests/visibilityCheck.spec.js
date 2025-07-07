@@ -22,7 +22,7 @@ test("Validation of Mouse hover", async({page})=>{
     await page.locator("#mousehover").hover();
 })
 
-test.only("Frame Validation", async({page})=>{
+test("Frame Validation", async({page})=>{
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     const framesPage =  page.frameLocator("#courses-iframe");
     await framesPage.locator("li a[href*='lifetime-access']:visibile").click();
