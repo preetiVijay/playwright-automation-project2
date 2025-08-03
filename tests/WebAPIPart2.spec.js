@@ -4,13 +4,13 @@ let webContext;
 
 test.beforeAll(async({browser})=>{
     
-    const userEmail = 'anshika@gmail.com';
+    const userEmail = 'vijaypreeti@gmail.com';
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/client');
     // Login with valid username and password
     await page.locator('#userEmail').fill(userEmail);
-    await page.locator('#userPassword').fill('Iamking@000');
+    await page.locator('#userPassword').fill('Qwerty@24');
     await page.locator('#login').click();
 
     // Select the products and add them into the cart
