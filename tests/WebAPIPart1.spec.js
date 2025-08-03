@@ -1,51 +1,23 @@
 import { test, expect, request } from '@playwright/test';
-import { assert } from 'console';
+import { APIUtils } from './utils/APIUtils';
 
 const loginPayload = {userEmail:"anshika@gmail.com",userPassword:"Iamking@000"} //javascript object
 const createOrderPayload = {orders:[{country:"India",productOrderedId:"67a8df1ac0d3e6622a297ccb"}]};
-let token;
-let orderId;
+let response;
 
 test.beforeAll(async() =>{
 
-    // Login
     const apiContext = await request.newContext();   
-    const loginResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/auth/login", 
-        {
-            data: loginPayload
-        }     
-    )
-    expect((loginResponse).ok()).toBeTruthy(); // Check for successful status code in the range of 200 (200,201)
-    const loginResponseJson = await loginResponse.json();
-    token = loginResponseJson.token;
-    console.log(token);
-
-    // Create order
-    const orderCreatedResponse = await apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order", 
-        {
-            data: createOrderPayload,
-            headers:{
-               "Authorization": token,
-               "Content-Type": "application/json"
-            }
-        }     
-    )
-    expect((orderCreatedResponse).ok()).toBeTruthy(); // Check for successful status code in the range of 200 (200,201)
-    const orderCreatedResponseJson = await orderCreatedResponse.json();
-    orderId = orderCreatedResponseJson.orders[0];
-    console.log(orderId);
-});
-
-test.beforeEach(()=>{
-
-
+    const apiUtils = new APIUtils(apiContext, loginPayload);
+    response = await apiUtils.createOrder(createOrderPayload);
 });
 
 test('Validate user should be successfully able to place the order', async ({ page }) => {
     
     page.addInitScript(value => {
         window.localStorage.setItem('token',value);
-    },token);
+    },response.token);
+
 
     await page.goto('https://rahulshettyacademy.com/client');
     
@@ -62,14 +34,14 @@ test('Validate user should be successfully able to place the order', async ({ pa
         const currentOrderId = await orderList.nth(i).locator("th").textContent();
         
         // If order list contains the actual order id then click on view button
-        if(orderId.includes(currentOrderId)){
+        if(response.orderId.includes(currentOrderId)){
             await orderList.nth(i).locator("td button").first().click();
             break;
         }
     }
     // Validate the actual order id 
     const actualOrderId = await page.locator(".col-text").textContent();
-    expect(orderId.includes(actualOrderId)).toBeTruthy();
+    expect(response.orderId.includes(actualOrderId)).toBeTruthy();
 
     // Validate the actual product
     await expect(page.locator('div.title')).toHaveText(' ADIDAS ORIGINAL ');
