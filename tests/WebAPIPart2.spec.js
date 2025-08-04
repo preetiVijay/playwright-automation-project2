@@ -14,7 +14,7 @@ test.beforeAll(async({browser})=>{
     await page.locator('#login').click();
 
     // Select the products and add them into the cart
-    await expect(page.locator('.card-body b').last()).toContainText('Fav Gucci');
+    await expect(page.locator('.card-body b').last()).toContainText('IPHONE 13 PRO');
     await context.storageState({path: 'state.json'});
     webContext = await browser.newContext({storageState: 'state.json'});
 });

@@ -11,7 +11,7 @@ test('Validate user should be successfully able to place the order', async ({ pa
     await page.locator('#login').click();
 
     // Select the products and add them into the cart
-    await expect(page.locator('.card-body b').last()).toContainText('Fav Gucci');
+    await expect(page.locator('.card-body b').last()).toContainText('IPHONE 13 PRO');
     // const itemsList = await page.locator('.card-body b').allTextContents();
     // for(let i = 0; i < itemsList.length; i++){
     //     if(itemsList[i] == "IPHONE 13 PRO"){
