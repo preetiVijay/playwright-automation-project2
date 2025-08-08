@@ -22,10 +22,21 @@ test("Validation of Mouse hover", async({page})=>{
     await page.locator("#mousehover").hover();
 })
 
-test.skip("Frame Validation", async({page})=>{
+test("Frame Validation", async({page})=>{
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     const framesPage =  page.frameLocator("#courses-iframe");
     await framesPage.locator("li a[href*='lifetime-access']:visibile").click();
     console.log(framesPage.locator('.text h2').textContent());
 })
+
+test("Screenshot & Visual comparision", async({page})=>{
+    await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
+    await expect(page.locator("#displayed-text")).toBeVisible();
+    await page.locator("#hide-textbox").click();
+    await expect(page).toHaveScreenshot("sampleScreenshot.png");
+    // expect(await page.screenshot()).toMatchSnapshot('sampleScreenshot.png');
+    // await expect(page.locator("displayed-text")).toBeHidden();
+})
+
+
  

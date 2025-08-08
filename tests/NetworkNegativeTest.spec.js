@@ -49,3 +49,20 @@ test("Security test request intercept", async({page})=>{
     await expect(page.locator("p").last()).toHaveText("You are not authorize to view this order");
     
 })
+
+test.only("Abort the Network calls", async({page})=>{
+
+    page.route('**//*.css', route=>route.abort()); // Blocking all the CSS calls
+    // page.route('**//*.{jpg,png,jpeg}', route=>route.abort()); // Blocking all the images calls with different extensions
+    const userName = page.locator("#username");
+    const password = page.locator("#passowrd");
+    const signIn = page.locator("#signInBtn");
+    page.on('request', request=> console.log(request.url()));
+    page.on('response', response=> console.log(response.url(), response.status()));
+    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+    console.log(await page.title());
+    await userName.fill("rahulshettyacademy");
+    await password.fill("learning");
+    await signIn.click();
+    console.log(await page.title());
+})
