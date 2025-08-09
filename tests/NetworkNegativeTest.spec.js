@@ -50,7 +50,7 @@ test("Security test request intercept", async({page})=>{
     
 })
 
-test.only("Abort the Network calls", async({page})=>{
+test("Abort the Network calls", async({page})=>{
 
     page.route('**//*.css', route=>route.abort()); // Blocking all the CSS calls
     // page.route('**//*.{jpg,png,jpeg}', route=>route.abort()); // Blocking all the images calls with different extensions

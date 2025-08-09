@@ -40,7 +40,6 @@ test('Upload download excel validation', async ({ page }) => {
     await page.locator("#fileinput").click(); // Click the Upload button first
     await page.locator("#fileinput").setInputFiles("./download.xlsx"); // Upload the file 
     const textlocator = page.getByText(textSearch);
-    const desiredRow = page.getByRole('row').filter({ has: textlocator });
+    const desiredRow = page.getByRole('row').filter({ has: textlocator }); // Find the row containing the text
     await expect(desiredRow.locator("#cell-4-undefined")).toContainText(updateValue);
-
 })
