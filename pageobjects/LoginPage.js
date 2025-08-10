@@ -1,3 +1,4 @@
+// This class represents the login page of the application.
 export class LoginPage{
 
     constructor(page){
