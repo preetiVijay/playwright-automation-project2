@@ -4,7 +4,7 @@
 This project demonstrates the use of the Playwright testing framework for UI and API Testing. It includes sample test cases for calendar validation, Excel file upload/download, and API utilities for authentication and order creation.
 
 ## Prerequisites
-- Node.js (v16 or above recommended)
+- Node.js (v24 or above recommended)
 - npm (Node Package Manager)
 - Playwright
 - ExcelJS
