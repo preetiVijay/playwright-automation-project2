@@ -26,7 +26,7 @@ test.describe.configure({ mode: 'parallel' });
 test("Frame Validation", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     const framesPage = page.frameLocator("#courses-iframe");
-    
+
     // Wait for the target element to be visible before clicking
     await expect(framesPage.locator("a.new-navbar-highlighter").first()).toBeVisible();
     await framesPage.locator("a.new-navbar-highlighter").first().click();
@@ -40,9 +40,9 @@ test("Screenshot & Visual comparision", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await expect(page.locator("#displayed-text")).toBeVisible();
     await page.locator("#hide-textbox").click();
+    await expect(page.locator("#displayed-text")).toBeHidden();
     await expect(page).toHaveScreenshot("sampleScreenshot.png");
     // expect(await page.screenshot()).toMatchSnapshot('sampleScreenshot.png');
-    // await expect(page.locator("displayed-text")).toBeHidden();
 })
 
 
