@@ -24,13 +24,13 @@ jobs:
     - name: Generate Allure Report
       run: allure generate ./allure-results --clean -o ./allure-report
     - name: Upload Allure Report as Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
           name: allure-report
           path: ./allure-report
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+    # - name: Upload Playwright Report as Artifact
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: playwright-report
+    #     path: playwright-report/
+    #     retention-days: 30
