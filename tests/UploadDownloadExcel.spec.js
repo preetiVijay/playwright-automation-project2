@@ -1,5 +1,5 @@
-const ExcelJs = require('exceljs');
-const { test, expect } = require('@playwright/test');
+import ExcelJs from 'exceljs';
+import { test, expect } from '@playwright/test';
 
 async function writeExcelTest(searchText, replaceText, change, filePath) {
 

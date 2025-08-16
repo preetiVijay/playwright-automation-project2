@@ -1,9 +1,9 @@
-import { LoginPage } from '../pageobjects/LoginPage';
-import { DashboardPage } from '../pageobjects/DashboardPage';
-import { CartPage } from '../pageobjects/CartPage';
-import { CheckOutPage } from '../pageobjects/CheckOutPage';
-import { OrderHistoryPage } from '../pageobjects/OrderHistoryPage';
-import { OrderReviewPage } from '../pageobjects/OrderReviewPage';
+import { LoginPage } from '../pageobjects/LoginPage.js';
+import { DashboardPage } from '../pageobjects/DashboardPage.js';
+import { CartPage } from '../pageobjects/CartPage.js';
+import { CheckOutPage } from '../pageobjects/CheckOutPage.js';
+import { OrderHistoryPage } from '../pageobjects/OrderHistoryPage.js';
+import { OrderReviewPage } from '../pageobjects/OrderReviewPage.js';
 
 export class POManager{
 

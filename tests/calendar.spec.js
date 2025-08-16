@@ -14,5 +14,9 @@ test("Calendar Validation", async({page})=>{
     await page.getByText(year).click();
     await page.locator('.react-calendar__year-view__months__month').nth(Number(month)-1).click();
     await page.locator("//abbr[text()='"+date+"']").click();
-    expect(await page.locator(".react-date-picker__inputGroup [type='date']").getAttribute("value")).toContain(year+"-"+month+"-"+date);
+    // expect(await page.locator(".react-date-picker__inputGroup [type='date']").getAttribute("value")).toContain(year+"-"+month+"-"+date);
+    const paddedMonth = month.padStart(2, '0');
+    const paddedDate = date.padStart(2, '0');
+    const expectedValue = `${year}-${paddedMonth}-${paddedDate}`;
+    await expect(page.locator(".react-date-picker__inputGroup [type='date']")).toHaveAttribute("value", expectedValue);
 })

@@ -1,6 +1,6 @@
-import {test, expect} from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
-test('Check whether the element is displayed or not', async({page})=>{
+test('Check whether the element is displayed or not', async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     // await page.goto("https://www.google.com/");
     // await page.goBack();
@@ -11,25 +11,32 @@ test('Check whether the element is displayed or not', async({page})=>{
     await expect(page.locator("#displayed-text")).toBeHidden();
 })
 
-test("Automation of Java/Javascript alert popups", async({page})=>{
+test("Automation of Java/Javascript alert popups", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await page.locator('#confirmbtn').click();
     page.on('dialog', dialog => dialog.accept());
 })
 
-test("Validation of Mouse hover", async({page})=>{
+test("Validation of Mouse hover", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await page.locator("#mousehover").hover();
 })
 
-test("Frame Validation", async({page})=>{
+test.describe.configure({ mode: 'parallel' });
+test("Frame Validation", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
-    const framesPage =  page.frameLocator("#courses-iframe");
-    await framesPage.locator("li a[href*='lifetime-access']:visibile").click();
-    console.log(framesPage.locator('.text h2').textContent());
+    const framesPage = page.frameLocator("#courses-iframe");
+    
+    // Wait for the target element to be visible before clicking
+    await expect(framesPage.locator("a.new-navbar-highlighter").first()).toBeVisible();
+    await framesPage.locator("a.new-navbar-highlighter").first().click();
+
+    // Await the textContent and log the result
+    const headingText = await framesPage.locator('.text h2').textContent();
+    console.log(headingText);
 })
 
-test("Screenshot & Visual comparision", async({page})=>{
+test("Screenshot & Visual comparision", async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/AutomationPractice/");
     await expect(page.locator("#displayed-text")).toBeVisible();
     await page.locator("#hide-textbox").click();
@@ -39,4 +46,3 @@ test("Screenshot & Visual comparision", async({page})=>{
 })
 
 
- 

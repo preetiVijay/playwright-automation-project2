@@ -9,7 +9,6 @@ test("User should be able to login", async({page}) => {
     await page.getByLabel("Check me out if you Love IceCreams!").check();
     await page.getByLabel("Gender").selectOption("Male");
     await page.getByLabel("Employed").check();
-    // await page.locator("[name='bday']").fill("12.12.2012");
     await page.getByRole("button", {name: 'Submit'}).click();
     expect(await page.getByText("Success! The Form has been submitted successfully!.").isVisible()).toBeTruthy();
     await page.getByRole("link",{name: 'Shop'}).click();

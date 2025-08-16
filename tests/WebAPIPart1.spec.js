@@ -1,5 +1,5 @@
 import { test, expect, request } from '@playwright/test';
-import { APIUtils } from './utils/APIUtils';
+import { APIUtils } from '../utils/APIUtils';
 
 const loginPayload = {userEmail:"vijaypreeti@gmail.com",userPassword:"Qwerty@24"} //javascript object
 const createOrderPayload = {orders:[{country:"India",productOrderedId:"67a8df1ac0d3e6622a297ccb"}]};

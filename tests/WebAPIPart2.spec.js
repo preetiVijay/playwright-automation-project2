@@ -1,10 +1,10 @@
 import { test, expect } from '@playwright/test';
 
 let webContext;
+let userEmail = 'vijaypreeti@gmail.com';
 
 test.beforeAll(async({browser})=>{
-    
-    const userEmail = 'vijaypreeti@gmail.com';
+    // Create a new context for the web API tests
     const context = await browser.newContext();
     const page = await context.newPage();
     await page.goto('https://rahulshettyacademy.com/client');
@@ -12,17 +12,18 @@ test.beforeAll(async({browser})=>{
     await page.locator('#userEmail').fill(userEmail);
     await page.locator('#userPassword').fill('Qwerty@24');
     await page.locator('#login').click();
-
-    // Select the products and add them into the cart
+    // Wait for products to load
     await expect(page.locator('.card-body b').last()).toContainText('IPHONE 13 PRO');
+    // Storing the login state of the page to reuse it in other tests
     await context.storageState({path: 'state.json'});
     webContext = await browser.newContext({storageState: 'state.json'});
 });
 
 test('Validate user should be successfully able to place the order', async () => {
     
-    const page = await webContext.newPage();
-    // Alternative way of doing the above is below
+    const email = "";
+    const page = await webContext.newPage(); // Create a new page with the web context and reuse the login state
+    await page.goto('https://rahulshettyacademy.com/client');
     const products = page.locator("div.card-body");
     const count = await products.count();
     for(let i = 0; i < count; i++){
@@ -36,7 +37,8 @@ test('Validate user should be successfully able to place the order', async () =>
     await page.locator("[routerLink*='cart']").click();
 
     // Validate that whether the added products are available in the page
-    await page.locator('div li').first().waitFor();
+    // await page.locator('div li').first().waitFor();
+    await expect(page.locator('div li').first()).toBeVisible(); 
     const bool = await page.locator("h3:has-text('IPHONE 13 PRO')").isVisible();
     expect(bool).toBeTruthy();
 
@@ -80,7 +82,7 @@ test('Validate user should be successfully able to place the order', async () =>
     await expect(page.locator('.hero-primary')).toHaveText(expectedSuccessfulMessage);
 
     // Get the order id and save it into a variable
-    const orderId = await page.locator('label.ng-star-inserted').textContent();
+    const orderId = await page.locator('tr.ng-star-inserted').first().textContent();
     
     // Go to the Order History Page
     await page.locator("button[routerlink*='myorders']").click();
@@ -107,4 +109,13 @@ test('Validate user should be successfully able to place the order', async () =>
     // Validate the actual product
     await expect(page.locator('div.title')).toHaveText('IPHONE 13 PRO');
     // 
+});
+
+test('User login and print the product titles', async () => {
+    const email = "";
+    const page = await webContext.newPage(); // Create a new page with the web context and reuse the login state
+    await page.goto('https://rahulshettyacademy.com/client');
+    const products = page.locator(".card-body");
+    const titles = await products.locator('b').allTextContents();
+    console.log(titles);
 });

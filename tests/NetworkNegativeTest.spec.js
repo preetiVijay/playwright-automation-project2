@@ -1,5 +1,5 @@
 import {test, expect, request} from '@playwright/test';
-import { APIUtils } from './utils/APIUtils';
+import { APIUtils } from '../utils/APIUtils';
 
 const loginPayload = {userEmail:"vijaypreeti@gmail.com",userPassword:"Qwerty@24"} //javascript object
 const createOrderPayload = {orders:[{country:"India",productOrderedId:"67a8df1ac0d3e6622a297ccb"}]};
@@ -52,10 +52,10 @@ test("Security test request intercept", async({page})=>{
 
 test("Abort the Network calls", async({page})=>{
 
-    page.route('**//*.css', route=>route.abort()); // Blocking all the CSS calls
-    // page.route('**//*.{jpg,png,jpeg}', route=>route.abort()); // Blocking all the images calls with different extensions
+    // page.route('**//*.css', route=>route.abort()); // Blocking all the CSS calls
+    page.route('**//*.{jpg,png,jpeg}', route=>route.abort()); // Blocking all the images calls with different extensions
     const userName = page.locator("#username");
-    const password = page.locator("#passowrd");
+    const password = page.locator("#password");
     const signIn = page.locator("#signInBtn");
     page.on('request', request=> console.log(request.url()));
     page.on('response', response=> console.log(response.url(), response.status()));

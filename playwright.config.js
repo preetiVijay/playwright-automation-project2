@@ -27,7 +27,7 @@ export default defineConfig({
   // retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   // workers: process.env.CI ? 1 : undefined,
-  workers: 1,
+  workers: 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
@@ -37,18 +37,37 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
+    screeenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+    {
+      name: 'chromium',
+      use: { 
+        ...devices['Desktop Chrome'], // array of devices available in Playwright
+        browserName: 'chromium',
+        headless: true,
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure',
+        trace: 'retain-on-failure',
+        permissions: ['geolocation'], // Allow geolocation permissions
+        ignoreHTTPSErrors: true, // Ignore HTTPS errors, accepts SSL certificates
+      }  
+    },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { 
+        ...devices['Desktop Firefox'],
+        browserName: 'firefox',
+        headless: true,
+        screenshot: 'only-on-failure',
+        video: 'retain-on-failure', // Record video only on failure. Can have values 'on', 'off', 'retain-on-failure', 'on-first-retry'
+        trace: 'retain-on-failure',
+        permissions: ['geolocation'], // Allow geolocation permissions
+        ignoreHTTPSErrors: true, // Ignore HTTPS errors, accepts SSL certificates
+      },
     },
 
     // {
