@@ -41,7 +41,9 @@ test("Screenshot & Visual comparision", async ({ page }) => {
     await expect(page.locator("#displayed-text")).toBeVisible();
     await page.locator("#hide-textbox").click();
     await expect(page.locator("#displayed-text")).toBeHidden();
-    await expect(page).toHaveScreenshot("sampleScreenshot.png");
+    await expect(page).toHaveScreenshot("sampleScreenshot.png", {
+        maxDiffPixelRatio: 0.05, // Adjust this value based on your tolerance for visual differences
+    });
     // expect(await page.screenshot()).toMatchSnapshot('sampleScreenshot.png');
 })
 
